@@ -59,7 +59,7 @@ sequenceDiagram
     Agent->>Server: Initial Authentication (HTTPS)
     Server->>Agent: Auth Success + Tunnel Config
     
-    rect rgb(200, 220, 255)
+    rect rgb(29, 22, 169)
         Note over Agent,Server: Secure Tunnel Setup
         Agent->>Server: Establish mTLS Tunnel
         Server->>Agent: Tunnel Ready
