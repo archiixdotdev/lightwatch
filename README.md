@@ -1,7 +1,18 @@
 # LightWatch: Open Source Lightweight Infrastructure Monitoring
-## Product Requirements Document
 
-### Executive Summary
+## Table of Content
+
+- [Summary](#summary)
+- [Problem Statement](#problem-statement)
+- [System Architecture](#system-architecture)
+- [Communication Flow](#communication-flow)
+- [Agent Architecture](#agent-architecture)
+- [Server Architecture](#server-architecture)
+- [Deployment Options](#deployment-options)
+  - [Single Server](#single-server)
+- [Security Architecture](#security-architecture)
+
+### Summary
 LightWatch is an open source infrastructure monitoring platform designed to be lightweight, secure, and easy to deploy. It uses a tunnel-based communication approach between agents and the central server, ensuring efficient and secure data transmission while maintaining minimal resource overhead.
 
 ### Problem Statement
