@@ -96,17 +96,6 @@ flowchart LR
     S --> DB[(Database)]
 ```
 
-#### High Availability
-```mermaid
-flowchart TD
-    A1[Agent 1] -->|Tunnel| LB[Load Balancer]
-    A2[Agent 2] -->|Tunnel| LB
-    LB --> S1[Server 1]
-    LB --> S2[Server 2]
-    S1 --> DB[(Database Cluster)]
-    S2 --> DB
-```
-
 ### Security Architecture
 
 ```mermaid
