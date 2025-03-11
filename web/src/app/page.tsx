@@ -21,7 +21,7 @@ export default function Home() {
               </span>
               Now in Development
             </div>
-            
+
             <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-clip-text text-transparent 
               bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 dark:from-white dark:to-gray-200">
               Open Source Lightweight Infrastructure Monitoring
@@ -32,18 +32,18 @@ export default function Home() {
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
               <Button size="lg" variant="default" className="h-12 px-6 font-medium" asChild>
-                <a href="https://github.com/naimulh247/lightwatch" 
-                   target="_blank" 
-                   rel="noopener noreferrer"
-                   className="inline-flex items-center">
+                <a href="https://github.com/naimulh247/lightwatch"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center">
                   <Github className="mr-2 h-5 w-5" />
                   View on GitHub
                 </a>
               </Button>
-              <Button 
-                size="lg" 
-                variant="outline" 
-                className="h-12 px-6 font-medium group transition-colors" 
+              <Button
+                size="lg"
+                variant="outline"
+                className="h-12 px-6 font-medium group transition-colors"
                 asChild
               >
                 <Link href="#features" className="inline-flex items-center">
@@ -172,9 +172,9 @@ export default function Home() {
               LightWatch is currently in development. Contribute to the project, share your ideas, and help shape the future of lightweight infrastructure monitoring.
             </p>
             <Button size="lg" className="h-12 px-6 font-medium" asChild>
-              <a 
-                href="https://github.com/naimulh247/lightwatch" 
-                target="_blank" 
+              <a
+                href="https://github.com/naimulh247/lightwatch"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center"
               >
