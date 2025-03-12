@@ -11,7 +11,7 @@ export default function Footer() {
           <div className="flex items-center gap-4 mt-4 md:mt-0">
             <Button variant="ghost" size="sm" asChild>
               <a 
-                href="https://github.com/archixxdotdev/lightwatch"
+                href="https://github.com/archiixdotdev/lightwatch"
                 target="_blank"
                 rel="noopener noreferrer"
               >
