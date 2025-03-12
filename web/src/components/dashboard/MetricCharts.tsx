@@ -4,6 +4,7 @@ import { TimeSeriesDataPoint, SystemHealthDataPoint, Anomaly } from "@/types/met
 
 interface CustomTooltipProps {
   active?: boolean;
+  /* eslint-disable @typescript-eslint/no-explicit-any */
   payload?: any[];
   label?: string;
 }

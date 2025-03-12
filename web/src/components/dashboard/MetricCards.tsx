@@ -4,7 +4,8 @@ import { TimeSeriesDataPoint } from "@/types/metrics";
 
 interface MetricCardProps { 
   title: string; 
-  value: string; 
+  value: string;
+  /* eslint-disable @typescript-eslint/no-explicit-any */ // Lucide icons are not typed
   icon: any;
   trend: 'up' | 'down' | 'stable';
   detail?: string;
