@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Server } from "lucide-react";
 import { ServerProgressBar } from "@/components/servers/server-progress-bar";
 import { ServerType } from "@/types/server";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface ServerCardProps {
   server: ServerType;
@@ -29,74 +30,83 @@ export function ServerCard({ server, onViewDetails, onViewConsole, onRestart }: 
   };
 
   return (
-    <div className={`p-4 rounded-lg border ${getStatusClass(server.status)}`}>
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between">
-        <div>
-          <div className="flex items-center gap-2 mb-2">
+    <Card className={getStatusClass(server.status)}>
+      <CardHeader>
+        <CardTitle>
+          <div className="flex items-center gap-2">
             <Server className="h-5 w-5" />
             <span className="font-medium">{server.name}</span>
             <Badge variant="outline" className={getBadgeClass(server.status)}>
-              {server.status === "error" ? "Error" : 
-              server.status === "warning" ? "Warning" : "Online"}
+              {server.status === "error" ? "Error" :
+                server.status === "warning" ? "Warning" : "Online"}
             </Badge>
           </div>
-          {/* Server details */}
-          <div className="grid grid-cols-3 gap-4 mb-3">
+        </CardTitle>
+        <CardDescription>
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between">
             <div>
-              <p className="text-xs text-gray-400">IP Address</p>
-              <p className="text-sm">192.168.1.{10 + server.id}</p>
+              {/* Server details */}
+              <div className="grid grid-cols-3 gap-4 mb-3">
+                <div>
+                  <p className="text-xs text-gray-400">IP Address</p>
+                  <p className="text-sm">192.168.1.{10 + server.id}</p>
+                </div>
+                <div>
+                  <p className="text-xs text-gray-400">Type</p>
+                  <p className="text-sm">{server.type || "Unknown"}</p>
+                </div>
+                <div>
+                  <p className="text-xs text-gray-400">Location</p>
+                  <p className="text-sm">{server.location || "Unknown"}</p>
+                </div>
+              </div>
             </div>
-            <div>
-              <p className="text-xs text-gray-400">Type</p>
-              <p className="text-sm">{server.type || "Unknown"}</p>
-            </div>
-            <div>
-              <p className="text-xs text-gray-400">Location</p>
-              <p className="text-sm">{server.location || "Unknown"}</p>
+
+            <div className="flex flex-wrap gap-2 mt-3 md:mt-0">
+              <Button size="sm" variant="outline" className="h-8 px-3"
+                onClick={() => onViewDetails(server.id)}>
+                Details
+              </Button>
+              <Button size="sm" variant="outline" className="h-8 px-3"
+                onClick={() => onViewConsole(server.id)}>
+                Console
+              </Button>
+              <Button size="sm" variant="outline" className="h-8 px-3"
+                onClick={() => onRestart(server.id)}>
+                Restart
+              </Button>
             </div>
           </div>
+        </CardDescription>
+      </CardHeader>
+
+
+      <CardContent>
+        {/* Server metrics */}
+        <div className="space-y-2">
+          <ServerProgressBar
+            name="CPU"
+            value={server.cpu}
+            max={100}
+            threshold={90}
+            color="blue"
+          />
+          <ServerProgressBar
+            name="Memory"
+            value={server.memory}
+            max={100}
+            threshold={90}
+            color="blue"
+          />
+          <ServerProgressBar
+            name="Disk"
+            value={server.disk}
+            max={100}
+            threshold={90}
+            color="blue"
+          />
         </div>
-        
-        <div className="flex flex-wrap gap-2 mt-3 md:mt-0">
-          <Button size="sm" variant="outline" className="h-8 px-3 border-[#2a2f3e]" 
-            onClick={() => onViewDetails(server.id)}>
-            Details
-          </Button>
-          <Button size="sm" variant="outline" className="h-8 px-3 border-[#2a2f3e]"
-            onClick={() => onViewConsole(server.id)}>
-            Console
-          </Button>
-          <Button size="sm" variant="outline" className="h-8 px-3 border-[#2a2f3e]"
-            onClick={() => onRestart(server.id)}>
-            Restart
-          </Button>
-        </div>
-      </div>
-      
-      {/* Server metrics */}
-      <div className="mt-3 space-y-2">
-        <ServerProgressBar 
-          name="CPU" 
-          value={server.cpu} 
-          max={100}
-          threshold={90}
-          color="blue"
-        />
-        <ServerProgressBar 
-          name="Memory" 
-          value={server.memory} 
-          max={100}
-          threshold={90}
-          color="blue"
-        />
-        <ServerProgressBar 
-          name="Disk" 
-          value={server.disk} 
-          max={100}
-          threshold={90}
-          color="blue"
-        />
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   );
 }
