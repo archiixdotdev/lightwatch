@@ -18,7 +18,7 @@ export default function Header() {
           </Button>
           <Button variant="outline" asChild>
             <a 
-              href="https://github.com/archixx/lightwatch" 
+              href="https://github.com/archixxdotdev/lightwatch" 
               target="_blank" 
               rel="noopener noreferrer"
             >

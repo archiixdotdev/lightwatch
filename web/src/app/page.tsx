@@ -32,7 +32,7 @@ export default function Home() {
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
               <Button size="lg" variant="default" className="h-12 px-6 font-medium" asChild>
-                <a href="https://github.com/archixx/lightwatch"
+                <a href="https://github.com/archixxdotdev/lightwatch"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center">
@@ -173,7 +173,7 @@ export default function Home() {
             </p>
             <Button size="lg" className="h-12 px-6 font-medium" asChild>
               <a
-                href="https://github.com/archixx/lightwatch"
+                href="https://github.com/archixxdotdev/lightwatch"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center"
