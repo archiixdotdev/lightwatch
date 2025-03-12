@@ -27,6 +27,7 @@
   "devDependencies": {
     "@chromatic-com/storybook": "^3.2.5",
     "@eslint/eslintrc": "^3",
+    "@storybook/addon-actions": "^8.6.4",
     "@storybook/addon-essentials": "^8.6.4",
     "@storybook/addon-onboarding": "^8.6.4",
     "@storybook/addon-styling-webpack": "^1.0.1",
