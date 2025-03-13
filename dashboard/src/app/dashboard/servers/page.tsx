@@ -139,7 +139,7 @@ const filterOptions: FilterOption[] = [
             description: server.status!,
         })),
     },
-    
+
 
 ];
 export default function Servers() {
@@ -155,32 +155,30 @@ export default function Servers() {
 
     return (
         <div>
-            <ServerFilterCard 
-                viewMode={viewMode} 
-                onViewModeChange={setViewMode} 
-                filterOptions={filterOptions} 
-                selectedFilters={selectedFilters} 
+            <ServerFilterCard
+                viewMode={viewMode}
+                onViewModeChange={setViewMode}
+                filterOptions={filterOptions}
+                selectedFilters={selectedFilters}
                 onFilter={handleFilterChange}
             />
-            {viewMode === "grid" ? (
-                <div className="grid grid-cols-1 gap-4">
-                    {/* show the servers based on the filters */}
-                    {servers.filter((server) => {
-                        // Only filter if there are selected filters for that category
-                        return Object.entries(selectedFilters).every(([filterId, values]) => {
-                            // If no filters selected for this category, return true
-                            if (!values.length) return true;
-                            // Check if server value is included in selected filter values
-                            return values.includes(server[filterId as keyof ServerType] as string);
-                        });
-                    }).map((server) => (
-                        <ServerCard key={server.id} server={server} onViewDetails={() => {}} onViewConsole={() => {}} onRestart={() => {}} />
-                    ))}
-                </div>
-            ) : (
-                // <ServerList />
-                <p>uhhh.. list view?</p>
-            )}
+
+            <div className="grid grid-cols-1 gap-4">
+                {/* show the servers based on the filters */}
+                {servers.filter((server) => {
+                    // Only filter if there are selected filters for that category
+                    return Object.entries(selectedFilters).every(([filterId, values]) => {
+                        // If no filters selected for this category, return true
+                        if (!values.length) return true;
+                        // Check if server value is included in selected filter values
+                        return values.includes(server[filterId as keyof ServerType] as string);
+                    });
+                }).map((server) => (
+                    <ServerCard key={server.id} server={server} onViewDetails={() => { }} onViewConsole={() => { }} onRestart={() => { }} />
+                ))}
+            </div>
+
+
         </div>
     )
 }
