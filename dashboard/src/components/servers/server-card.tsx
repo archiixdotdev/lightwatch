@@ -2,8 +2,9 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Server } from "lucide-react";
 import { ServerProgressBar } from "@/components/servers/server-progress-bar";
-import { ServerType } from "@/types/server";
+import { ServerType, ServerStatus, isDetailedServer, isLegacyServer } from "@/types/server";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 
 interface ServerCardProps {
   server: ServerType;
@@ -13,32 +14,48 @@ interface ServerCardProps {
 }
 
 export function ServerCard({ server, onViewDetails, onViewConsole, onRestart }: ServerCardProps) {
-  const getStatusClass = (status: string) => {
-    return status === "error"
+  const getStatusClass = (status: ServerStatus) => {
+    return status === ServerStatus.ERROR
       ? "border-red-500/30 bg-red-500/10"
-      : status === "warning"
+      : status === ServerStatus.WARNING
         ? "border-yellow-500/30 bg-yellow-500/10"
         : "border-green-500/30 bg-green-500/10";
   };
 
-  const getBadgeClass = (status: string) => {
-    return status === "error"
+  const getBadgeClass = (status: ServerStatus) => {
+    return status === ServerStatus.ERROR
       ? "bg-red-500/20 text-red-500 border-red-500/30"
-      : status === "warning"
+      : status === ServerStatus.WARNING
         ? "bg-yellow-500/20 text-yellow-500 border-yellow-500/30"
         : "bg-green-500/20 text-green-500 border-green-500/30";
   };
 
+  const handleCardClick = (e: React.MouseEvent) => {
+    // Prevent navigation if clicking on buttons
+    if ((e.target as HTMLElement).closest('button')) return;
+    onViewDetails(server.id);
+  };
+
+  const getMetricValue = (metric: number | { usage: number }) => {
+    return typeof metric === 'number' ? metric : metric.usage;
+  };
+
   return (
-    <Card className={getStatusClass(server.status)}>
+    <Card 
+      className={cn(
+        getStatusClass(server.status),
+        "cursor-pointer transition-colors hover:bg-accent/50"
+      )}
+      onClick={handleCardClick}
+    >
       <CardHeader>
         <CardTitle>
           <div className="flex items-center gap-2">
             <Server className="h-5 w-5" />
             <span className="font-medium">{server.name}</span>
             <Badge variant="outline" className={getBadgeClass(server.status)}>
-              {server.status === "error" ? "Error" :
-                server.status === "warning" ? "Warning" : "Online"}
+              {server.status === ServerStatus.ERROR ? "Error" :
+                server.status === ServerStatus.WARNING ? "Warning" : "Online"}
             </Badge>
           </div>
         </CardTitle>
@@ -49,7 +66,9 @@ export function ServerCard({ server, onViewDetails, onViewConsole, onRestart }: 
               <div className="grid grid-cols-3 gap-4 mb-3">
                 <div>
                   <p className="text-xs text-gray-400">IP Address</p>
-                  <p className="text-sm">192.168.1.{10 + server.id}</p>
+                  <p className="text-sm">
+                    {isDetailedServer(server) ? server.system.ip : `192.168.1.${10 + server.id}`}
+                  </p>
                 </div>
                 <div>
                   <p className="text-xs text-gray-400">Type</p>
@@ -86,21 +105,21 @@ export function ServerCard({ server, onViewDetails, onViewConsole, onRestart }: 
         <div className="space-y-2">
           <ServerProgressBar
             name="CPU"
-            value={server.cpu}
+            value={getMetricValue(server.cpu)}
             max={100}
             threshold={90}
             color="blue"
           />
           <ServerProgressBar
             name="Memory"
-            value={server.memory}
+            value={getMetricValue(server.memory)}
             max={100}
             threshold={90}
             color="blue"
           />
           <ServerProgressBar
             name="Disk"
-            value={server.disk}
+            value={getMetricValue(server.disk)}
             max={100}
             threshold={90}
             color="blue"
