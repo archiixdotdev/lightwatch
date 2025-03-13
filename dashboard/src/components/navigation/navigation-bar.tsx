@@ -64,19 +64,19 @@ export function NavigationBar({ defaultTab = "overview", tabs = defaultTabs }: N
     };
 
     return (
-        <Tabs defaultValue={defaultTab} className="mb-6" onValueChange={handleTabChange}>
+        <Tabs defaultValue={defaultTab} className="mb-6 px-4" onValueChange={handleTabChange}>
             <TabsList className="bg-sidebar">
                 {tabs.map((tab) => (
                     <TabsTrigger
                         key={tab.value}
                         value={tab.value}
-                        className="data-[state=active]:bg-sidebar-primary data-[state=active]:text-sidebar-primary-foreground text-sidebar-foreground hover:text-sidebar-accent-foreground"
+                        className="data-[state=active]:bg-sidebar-primary data-[state=active]:text-sidebar-primary-foreground text-sidebar-foreground hover:text-sidebar-accent-foreground px-4 md:px-3"
                     >
                         {/* Cast tab.icon as a React component */}
                         {React.createElement(tab.icon as React.ElementType, {
-                            className: "h-4 w-4 mr-2"
+                            className: "h-4 w-4 md:mr-2 m-1"
                         })}
-                        {tab.label}
+                        <span className="hidden md:inline">{tab.label}</span>
                     </TabsTrigger>
                 ))}
                 {/* <TabsTrigger value="overview" className="data-[state=active]:bg-blue-600">
