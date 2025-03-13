@@ -4,6 +4,7 @@ import { FilterOption, ServerFilterCard, ViewMode } from "@/components/servers/s
 import { ServerStatus, ServerType } from "@/types/server";
 import { Database, Activity, AlertTriangle, Server } from "lucide-react";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 const servers: ServerType[] = [
     {
@@ -143,6 +144,7 @@ const filterOptions: FilterOption[] = [
 
 ];
 export default function Servers() {
+    const router = useRouter();
     const [viewMode, setViewMode] = useState<ViewMode>("grid");
     const [selectedFilters, setSelectedFilters] = useState<Record<string, string[]>>({});
 
@@ -151,6 +153,10 @@ export default function Servers() {
             ...prev,
             [filterId]: options
         }));
+    };
+
+    const handleServerClick = (serverId: number) => {
+        router.push(`/dashboard/servers/${serverId}`);
     };
 
     return (
@@ -174,7 +180,13 @@ export default function Servers() {
                         return values.includes(server[filterId as keyof ServerType] as string);
                     });
                 }).map((server) => (
-                    <ServerCard key={server.id} server={server} onViewDetails={() => { }} onViewConsole={() => { }} onRestart={() => { }} />
+                    <ServerCard 
+                        key={server.id} 
+                        server={server} 
+                        onViewDetails={() => handleServerClick(server.id)}
+                        onViewConsole={() => {}} 
+                        onRestart={() => {}} 
+                    />
                 ))}
             </div>
 
