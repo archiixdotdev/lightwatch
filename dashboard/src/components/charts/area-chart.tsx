@@ -1,10 +1,9 @@
-// components/charts/area-chart.tsx
+'use client'
 import { ResponsiveContainer, AreaChart as RechartsAreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from "recharts";
 
 // Define color scheme types
 export type ChartColorScheme = {
   primary: string;
-  background: string;
   grid: string;
   text: string;
   tooltip: {
@@ -18,7 +17,7 @@ export type ChartColorScheme = {
 // Default dark theme
 export const darkColorScheme: ChartColorScheme = {
   primary: '#3b82f6',
-  background: '#1a1f2e',
+
   grid: '#374151',
   text: '#6b7280',
   tooltip: {
@@ -32,7 +31,6 @@ export const darkColorScheme: ChartColorScheme = {
 // Default light theme
 export const lightColorScheme: ChartColorScheme = {
   primary: '#2563eb',
-  background: '#ffffff',
   grid: '#e5e7eb',
   text: '#4b5563',
   tooltip: {
@@ -65,6 +63,7 @@ interface AreaChartProps {
   xAxisKey: string;
   yAxisDomain?: [number, number];
   colorScheme?: ChartColorScheme;
+  showLegend?: boolean;
 }
 
 export function AreaChart({ 
@@ -73,10 +72,11 @@ export function AreaChart({
   series, 
   xAxisKey,
   yAxisDomain,
-  colorScheme = darkColorScheme
+  colorScheme = darkColorScheme,
+  showLegend = true
 }: AreaChartProps) {
   return (
-    <div className={`h-[${height}px]`} style={{ background: colorScheme.background }}>
+    <div className={`h-[${height}px]`} >
       <ResponsiveContainer width="100%" height="100%">
         <RechartsAreaChart data={data}>
           <defs>
@@ -126,9 +126,11 @@ export function AreaChart({
               stackId={s.stackId}
             />
           ))}
-          <Legend 
-            wrapperStyle={{ color: colorScheme.text }}
-          />
+          {showLegend && (
+            <Legend 
+              wrapperStyle={{ color: colorScheme.text }}
+            />
+          )}
         </RechartsAreaChart>
       </ResponsiveContainer>
     </div>

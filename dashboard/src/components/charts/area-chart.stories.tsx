@@ -167,3 +167,19 @@ export const WeeklyTraffic: Story = {
     ],
   },
 }; 
+
+// Light theme
+export const LightTheme: Story = {
+  args: {
+    ...WeeklyTraffic.args,
+    colorScheme: lightColorScheme,
+  },
+};
+
+// Dark theme
+export const DarkTheme: Story = {
+  args: {
+    ...WeeklyTraffic.args,
+    colorScheme: darkColorScheme,
+  },
+};
