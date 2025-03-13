@@ -1,3 +1,4 @@
+'use client'
 import type { Meta, StoryObj } from '@storybook/react';
 import { ServerCard } from '@/components/servers/server-card';
 import { action } from '@storybook/addon-actions';
