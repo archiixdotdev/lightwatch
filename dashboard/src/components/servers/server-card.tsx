@@ -63,10 +63,10 @@ export function ServerCard({ server, onViewDetails, onViewConsole, onRestart }: 
             </div>
 
             <div className="flex flex-wrap gap-2 mt-3 md:mt-0">
-              <Button size="sm" variant="outline" className="h-8 px-3"
+              {/* <Button size="sm" variant="outline" className="h-8 px-3"
                 onClick={() => onViewDetails(server.id)}>
                 Details
-              </Button>
+              </Button> */}
               <Button size="sm" variant="outline" className="h-8 px-3"
                 onClick={() => onViewConsole(server.id)}>
                 Console
