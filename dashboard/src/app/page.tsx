@@ -1,4 +1,4 @@
-import Dashboard from "@/components/common/dashboard";
+// import Dashboard from "@/components/common/dashboard";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 
