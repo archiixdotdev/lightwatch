@@ -141,7 +141,7 @@ export function ServerFilterCard({
                     <RefreshCw className="h-4 w-4 mr-2" />
                     Refresh
                 </Button>
-                <ToggleGroup
+                {/* <ToggleGroup
                     type="single"
                     value={viewMode}
                     onValueChange={(value: string | undefined) => value && onViewModeChange(value as ViewMode)}
@@ -161,7 +161,7 @@ export function ServerFilterCard({
                     >
                         List
                     </ToggleGroupItem>
-                </ToggleGroup>
+                </ToggleGroup> */}
             </div>
         </div>
     );
