@@ -2,7 +2,7 @@
 
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AlertTriangle, FileCode, LineChart, Settings, Server, Bot } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 
 interface NavigationBarProps {
@@ -57,6 +57,13 @@ const defaultTabs = [
 
 export function NavigationBar({ defaultTab = "overview", tabs = defaultTabs }: NavigationBarProps) {
     const router = useRouter();
+    const pathname = usePathname();
+
+    // Get active tab based on current URL
+    const activeTab = tabs.find(tab => {
+        if (pathname === '/dashboard' && tab.value === 'overview') return true;
+        return pathname.startsWith(`/dashboard/${tab.value}`);
+    })?.value || defaultTab;
 
     const handleTabChange = (value: string) => {
         const route = value === 'overview' ? '/dashboard' : `/dashboard/${value}`;
@@ -64,7 +71,7 @@ export function NavigationBar({ defaultTab = "overview", tabs = defaultTabs }: N
     };
 
     return (
-        <Tabs defaultValue={defaultTab} className="mb-6 px-4" onValueChange={handleTabChange}>
+        <Tabs value={activeTab} className="mb-6 px-4" onValueChange={handleTabChange}>
             <TabsList className="bg-sidebar">
                 {tabs.map((tab) => (
                     <TabsTrigger
