@@ -15,6 +15,7 @@ export interface ServerType {
     network: number,
     status: ServerStatus,
     errors?: number,
+    warnings?: number,
     type?: string,
     location?: string,
     ip?: string,
