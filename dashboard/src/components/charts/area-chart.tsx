@@ -54,6 +54,8 @@ interface AreaSeriesProps {
   gradientId: string;
   gradientStops: GradientStop[];
   stackId?: string;
+  unit?: string;
+  formatter?: (value: number) => string;
 }
 
 interface AreaChartProps {
@@ -64,6 +66,16 @@ interface AreaChartProps {
   yAxisDomain?: [number, number];
   colorScheme?: ChartColorScheme;
   showLegend?: boolean;
+}
+
+// Helper function to format bytes
+export function formatBytes(bytes: number, decimals: number = 2): string {
+  if (bytes === 0) return '0 B';
+  const k = 1024;
+  const dm = decimals < 0 ? 0 : decimals;
+  const sizes = ['B', 'KB', 'MB', 'GB', 'TB'];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
 }
 
 export function AreaChart({ 
@@ -104,6 +116,16 @@ export function AreaChart({
             axisLine={{ stroke: colorScheme.grid }}
             tickLine={{ stroke: colorScheme.grid }}
             domain={yAxisDomain}
+            tickFormatter={(value: number) => {
+              const firstSeries = series[0]; // Get the first series for formatting
+              if (firstSeries.formatter) {
+                return firstSeries.formatter(value);
+              }
+              if (firstSeries.unit) {
+                return `${value} ${firstSeries.unit}`;
+              }
+              return value.toString();
+            }}
           />
           <CartesianGrid strokeDasharray="3 3" stroke={colorScheme.grid} />
           <Tooltip 
@@ -113,6 +135,16 @@ export function AreaChart({
             }} 
             itemStyle={{ color: colorScheme.tooltip.text }}
             labelStyle={{ color: colorScheme.tooltip.label }}
+            formatter={(value: number, name: string) => {
+              const matchingSeries = series.find((s: AreaSeriesProps) => s.name === name);
+              if (matchingSeries?.formatter) {
+                return [matchingSeries.formatter(value), name];
+              }
+              if (matchingSeries?.unit) {
+                return [`${value} ${matchingSeries.unit}`, name];
+              }
+              return [value, name];
+            }}
           />
           {series.map((s) => (
             <Area 

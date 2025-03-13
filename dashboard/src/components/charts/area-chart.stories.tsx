@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { AreaChart, darkColorScheme, lightColorScheme } from './area-chart';
+import { AreaChart, darkColorScheme, lightColorScheme, formatBytes } from '@/components/charts/area-chart';
 
 // Define some preset color palettes
 const colorPalettes = {
@@ -35,6 +35,7 @@ const generateTimeSeriesData = (hours: number) => {
     cpu: Math.floor(Math.random() * 40) + 30,
     memory: Math.floor(Math.random() * 30) + 40,
     disk: Math.floor(Math.random() * 20) + 50,
+    network: Math.floor(Math.random() * 1000) + 500, // Network traffic in MB
   }));
 };
 
@@ -53,6 +54,7 @@ export const SingleMetric: Story = {
           { offset: '0%', color: colorPalettes.blue[0], opacity: 0.4 },
           { offset: '100%', color: colorPalettes.blue[0], opacity: 0.1 },
         ],
+        unit: '%'
       },
     ],
     yAxisDomain: [0, 100],
@@ -83,6 +85,7 @@ export const StackedAreas: Story = {
           { offset: '100%', color: '#ef4444', opacity: 0.1 },
         ],
         stackId: 'memory',
+        unit: 'GB'
       },
       {
         dataKey: 'available',
@@ -94,6 +97,7 @@ export const StackedAreas: Story = {
           { offset: '100%', color: '#22c55e', opacity: 0.1 },
         ],
         stackId: 'memory',
+        unit: 'GB'
       },
     ],
     yAxisDomain: [0, 100],
@@ -115,6 +119,7 @@ export const MultipleMetrics: Story = {
           { offset: '0%', color: colorPalettes.blue[0], opacity: 0.4 },
           { offset: '100%', color: colorPalettes.blue[0], opacity: 0.1 },
         ],
+        unit: '%'
       },
       {
         dataKey: 'memory',
@@ -125,6 +130,7 @@ export const MultipleMetrics: Story = {
           { offset: '0%', color: colorPalettes.red[0], opacity: 0.4 },
           { offset: '100%', color: colorPalettes.red[0], opacity: 0.1 },
         ],
+        unit: 'GB'
       },
       {
         dataKey: 'disk',
@@ -135,6 +141,7 @@ export const MultipleMetrics: Story = {
           { offset: '0%', color: colorPalettes.green[0], opacity: 0.4 },
           { offset: '100%', color: colorPalettes.green[0], opacity: 0.1 },
         ],
+        unit: 'GB'
       },
     ],
     yAxisDomain: [0, 100],
@@ -163,10 +170,34 @@ export const WeeklyTraffic: Story = {
           { offset: '0%', color: '#8b5cf6', opacity: 0.4 },
           { offset: '100%', color: '#8b5cf6', opacity: 0.1 },
         ],
+        formatter: (value: number) => formatBytes(value * 1024 * 1024) // Convert MB to formatted bytes
       },
     ],
   },
-}; 
+};
+
+// Example with custom formatter
+export const CustomFormatter: Story = {
+  args: {
+    data: generateTimeSeriesData(24),
+    xAxisKey: 'time',
+    height: 300,
+    series: [
+      {
+        dataKey: 'cpu',
+        name: 'CPU Temperature',
+        color: colorPalettes.red[0],
+        gradientId: 'tempGradient',
+        gradientStops: [
+          { offset: '0%', color: colorPalettes.red[0], opacity: 0.4 },
+          { offset: '100%', color: colorPalettes.red[0], opacity: 0.1 },
+        ],
+        formatter: (value: number) => `${value.toFixed(1)}°C`
+      },
+    ],
+    yAxisDomain: [0, 100],
+  },
+};
 
 // Light theme
 export const LightTheme: Story = {
